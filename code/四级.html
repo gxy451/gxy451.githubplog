@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博文详情| Meospill's Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, '微软雅黑', sans-serif;
+            background: url("tree&bird.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #2c4b32;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .navbar {
+            background: rgba(255, 255, 245, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #d4e8d1;
+            padding: 12px 0;
+        }
+
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2b7340;
+            text-decoration: none;
+            background: #eaf8e6;
+            padding: 4px 18px;
+            border-radius: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #3c6e47;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #1b8742;
+            border-bottom: 2px solid #6fbf6f;
+            padding-bottom: 4px;
+        }
+
+        .search-area {
+            background: #f1f9ef;
+            padding: 6px 16px;
+            border-radius: 60px;
+            display: flex;
+            gap: 8px;
+            border: 1px solid #cbe5cb;
+        }
+
+        .search-area input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 140px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn {
+            background: #3a8a4a;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .logout-btn {
+            background: #ccc;
+            color: #333;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .user-name {
+            color: #2b7340;
+            font-weight: 500;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 25px 0 15px;
+            background: #eef7ea;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #2b7340;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            background: #d9efd4;
+        }
+        .article-card {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dcf0d6;
+            padding-bottom: 20px;
+        }
+
+        .article-title {
+            font-size: 2rem;
+            color: #1f6737;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #7cae7a;
+            font-size: 0.85rem;
+        }
+
+        .article-category {
+            background: #eef7ea;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .tag {
+            background: #eef7ea;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #317744;
+        }
+
+        .article-content {
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #2c4b32;
+            margin: 30px 0;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        .action-bar {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-top: 1px solid #dcf0d6;
+            border-bottom: 1px solid #dcf0d6;
+        }
+
+        .like-btn, .share-btn {
+            background: #eef7ea;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .like-btn:hover, .share-btn:hover {
+            background: #d9efd4;
+            transform: scale(1.02);
+        }
+
+        .like-btn.liked {
+            background: #ff6b6b;
+            color: white;
+        }
+        .comment-section {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .comment-section h3 {
+            color: #226a38;
+            margin-bottom: 20px;
+        }
+
+        .comment-input-area {
+            margin-bottom: 25px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dcf0d6;
+            border-radius: 24px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+
+        .submit-comment {
+            background: #3a8a4a;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .comment-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .comment-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        .comment-name {
+            font-weight: 600;
+            color: #2b7340;
+        }
+
+        .comment-time {
+            color: #999;
+        }
+
+        .comment-text {
+            color: #333;
+            line-height: 1.5;
+        }
+        .related-section {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .related-section h3 {
+            color: #226a38;
+            margin-bottom: 20px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .related-card {
+            background: #f9fff7;
+            border-radius: 20px;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #dcf0d6;
+        }
+
+        .related-card:hover {
+            transform: translateY(-3px);
+            border-color: #a6d89a;
+        }
+
+        .related-card h4 {
+            color: #246e3a;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .related-card p {
+            font-size: 0.7rem;
+            color: #7cae7a;
+        }
+        @media (max-width: 700px) {
+            .nav-wrap {
+                flex-direction: column;
+            }
+            .article-title {
+                font-size: 1.5rem;
+            }
+            .article-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-wrap">
+        <a href="index.html" class="logo">Meospill</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="category.html">分类</a>
+            <a href="archive.html">归档</a>
+            <a href="AboutMe.html">关于我</a>
+        </div>
+        <div class="search-area">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="搜文章...">
+        </div>
+        <div class="user-info" id="userInfo"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="article-card" id="articleContainer"></div>
+    <div class="action-bar" id="actionBar"></div>
+    <div class="comment-section">
+        <h3>💬 评论区</h3>
+        <div class="comment-input-area">
+            <textarea class="comment-input" id="commentText" rows="3" placeholder="写下你的评论..."></textarea>
+            <button class="submit-comment" id="submitCommentBtn">发表评论</button>
+        </div>
+        <div class="comment-list" id="commentList"></div>
+    </div>
+
+    <div class="related-section" id="relatedSection">
+        <h3>📚 相关文章推荐</h3>
+        <div class="related-grid" id="relatedList"></div>
+    </div>
+</div>
+<script>
+    const articlesDB = [
+        { id: 2, title: "四级高分作文万能金句汇总", date: "2026-05-14", category: "知识&科普",likes: 1018, tags: ["四级", "学习"], icon: "💪", content: "四级备考进入最后三十天冲刺阶段📝，还在愁作文写不出、句式平淡拿不到分？小青为大家整理好了超好用的四级作文万能高级佳句，好背好记不费脑，考场直接套用百搭不出错！轻松告别口水大白话，简单背熟就能拉高作文档次，稳稳拿捏高分。快和小青一起抓紧碎片时间速速积累🧩，吃透这些宝藏好句～祝各位CCSUer作文下笔流畅，轻松过级，一举上岸✨。", externalUrl: "https://weibo.com/6073834622/QFka5FLrC" }]
+        
+    function getArticleId() {
+        const params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('id'));
+    }
+
+    let currentArticle = null;
+    function getCurrentUser() {
+        const user = localStorage.getItem('currentUser');
+        if (user) return JSON.parse(user);
+        return null;
+    }
+    function renderArticle() {
+        const container = document.getElementById('articleContainer');
+        if (!currentArticle) {
+            container.innerHTML = '<p>文章不存在</p>';
+            return;
+        }
+
+        const hasExternal = currentArticle.externalUrl && currentArticle.externalUrl.trim() !== '';
+        const contentHtml = `
+            <div class="article-header">
+                <h1 class="article-title">${currentArticle.icon || '📄'} ${currentArticle.title}</h1>
+                <div class="article-meta">
+                    <span>📅 ${currentArticle.date}</span>
+                    <span class="article-category">📂 ${currentArticle.category}</span>
+                    <span>❤️ ${currentArticle.likes} 点赞</span>
+                </div>
+                <div class="article-tags">
+                    ${currentArticle.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
+                </div>
+            </div>
+            <div class="article-content">
+                <p>${currentArticle.content}</p>
+                ${hasExternal ? `<p style="margin-top:20px;"><a href="${currentArticle.externalUrl}" target="_blank" style="color:#3a8a4a;">🔗 原文链接（点击查看完整内容） →</a></p>` : ''}
+            </div>
+        `;
+        container.innerHTML = contentHtml;
+    }
+
+    function renderActionBar() {
+        const container = document.getElementById('actionBar');
+        if (!currentArticle) return;
+
+        const likedKey = `liked_${currentArticle.id}`;
+        const hasLiked = localStorage.getItem(likedKey) === 'true';
+
+        container.innerHTML = `
+            <button class="like-btn ${hasLiked ? 'liked' : ''}" id="likeBtn">
+                ${hasLiked ? '❤️ 已点赞' : '🤍 点赞'} <span id="likeCount">${currentArticle.likes}</span>
+            </button>
+            <button class="share-btn" id="shareBtn">📤 分享文章</button>
+        `;
+        const likeBtn = document.getElementById('likeBtn');
+        if (likeBtn) {
+            likeBtn.addEventListener('click', () => {
+                const liked = localStorage.getItem(likedKey) === 'true';
+                if (!liked) {
+                    currentArticle.likes += 1;
+                    localStorage.setItem(likedKey, 'true');
+                    localStorage.setItem(`article_${currentArticle.id}_likes`, currentArticle.likes);
+                    document.getElementById('likeCount').innerText = currentArticle.likes;
+                    likeBtn.classList.add('liked');
+                    likeBtn.innerHTML = `❤️ 已点赞 <span id="likeCount">${currentArticle.likes}</span>`;
+                    alert('感谢点赞！❤️');
+                } else {
+                    alert('你已经点过赞啦～');
+                }
+            });
+        }
+
+        const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('文章链接已复制！📋 可以分享给朋友啦～');
+                }).catch(() => {
+                    alert('分享链接：' + url);
+                });
+            });
+        }
+    }
+    function renderComments() {
+        const commentList = document.getElementById('commentList');
+        const comments = JSON.parse(localStorage.getItem(`comments_${currentArticle.id}`) || '[]');
+        
+        if (comments.length === 0) {
+            commentList.innerHTML = '<p style="color:#7cae7a; text-align:center;">✨ 暂无评论，来抢沙发吧～</p>';
+            return;
+        }
+
+        commentList.innerHTML = comments.map(c => `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <span class="comment-name">${escapeHtml(c.name)}</span>
+                    <span class="comment-time">${c.time}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(c.text)}</div>
+            </div>
+        `).join('');
+    }
+
+    function submitComment() {
+        const user = getCurrentUser();
+        if (!user) {
+            alert('请先登录后再评论～');
+            return;
+        }
+
+        const textarea = document.getElementById('commentText');
+        const text = textarea.value.trim();
+        if (!text) {
+            alert('请输入评论内容');
+            return;
+        }
+
+        const comments = JSON.parse(localStorage.getItem(`comments_${currentArticle.id}`) || '[]');
+        const newComment = {
+            name: user.username,
+            text: text,
+            time: new Date().toLocaleString()
+        };
+        comments.push(newComment);
+        localStorage.setItem(`comments_${currentArticle.id}`, JSON.stringify(comments));
+        textarea.value = '';
+        renderComments();
+        alert('评论发表成功！');
+    }
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    function renderRelated() {
+        if (!currentArticle) return;
+
+        const related = articlesDB.filter(article => {
+            if (article.id === currentArticle.id) return false;
+
+            if (article.category === currentArticle.category) return true;
+            return article.tags.some(tag => currentArticle.tags.includes(tag));
+        }).slice(0, 3); 
+
+        const container = document.getElementById('relatedList');
+        if (related.length === 0) {
+            container.innerHTML = '<p style="color:#7cae7a;">暂无相关文章推荐～</p>';
+            return;
+        }
+
+        container.innerHTML = related.map(article => `
+            <div class="related-card" onclick="location.href='article.html?id=${article.id}'">
+                <h4>${article.icon} ${article.title}</h4>
+                <p>${article.category} · ${article.date}</p>
+            </div>
+        `).join('');
+    }
+
+    function loadLikes() {
+        const saved = localStorage.getItem(`article_${currentArticle.id}_likes`);
+        if (saved && !isNaN(parseInt(saved))) {
+            currentArticle.likes = parseInt(saved);
+        }
+    }
+
+    function updateUserUI() {
+        const userInfoDiv = document.getElementById('userInfo');
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            userInfoDiv.innerHTML = `
+                <span class="user-name">🌿 ${currentUser.username}</span>
+                <button class="logout-btn" id="logoutBtn">退出</button>
+            `;
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.onclick = () => { localStorage.removeItem('currentUser'); updateUserUI(); alert('已退出登录'); location.reload(); };
+        } else {
+            userInfoDiv.innerHTML = `<button class="login-btn" id="loginBtn">登录/注册</button>`;
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) loginBtn.onclick = () => { window.location.href = 'index.html'; };
+        }
+    }
+
+    function initSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    location.href = `category.html?search=${encodeURIComponent(this.value)}`;
+                }
+            });
+        }
+    }
+
+    function init() {
+        const id = getArticleId();
+        currentArticle = articlesDB.find(a => a.id === id);
+        if (!currentArticle) {
+          
+            currentArticle = articlesDB[0];
+        }
+        
+        loadLikes();
+        renderArticle();
+        renderActionBar();
+        renderComments();
+        renderRelated();
+        updateUserUI();
+        initSearch();
+
+        const submitBtn = document.getElementById('submitCommentBtn');
+        if (submitBtn) submitBtn.addEventListener('click', submitComment);
+    }
+
+    init();
+</script>
+</body>
+</html>

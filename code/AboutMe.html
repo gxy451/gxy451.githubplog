@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AboutMe| Meospill's Blog</title>
+    <head>
+        <link rel="icon" href="头像.jpg">
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', '微软雅黑', sans-serif;
+            background: url("greenroot.jpg") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .about-card {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 40px;
+        }
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .left {
+            flex: 1.5;
+        }
+
+        .right {
+            flex: 1;
+            text-align: center;
+        }
+        .avatar {
+            width: 200px;
+            height: 200px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #2e7d32;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1b5e20;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            color: #43a047;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8f5e9;
+        }
+
+        .intro {
+            color: #2e3b2e;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* 技能标签 */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .skill-tag {
+            background: #e8f5e9;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .contact {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .contact-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-top: 8px;
+            color: #388e3c;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="about-card">
+        <div class="about-content">
+            <div class="left">
+                <h1>高希怡</h1>
+                <div class="tag">长沙学院软件工程大一在读</div>
+                <div class="intro">
+                    人生需要留白，才有呼吸的空间
+                </div>
+                
+                <div class="skills">
+                    <span class="skill-tag">海报设计</span>
+                    <span class="skill-tag">活动策划</span>
+                    <span class="skill-tag">高校媒体运营</span>
+                    <span class="skill-tag">短视频创作</span>
+                    <span class="skill-tag">摄影</span>
+                    <span class="skill-tag">艺术</span>
+                    <span class="skill-tag">公众号排版</span>
+                </div>
+                <div class="contact">
+                    <a href="#" class="btn" id="contactBtn">📄 联系我</a>
+                    <a href="#" class="contact-item">WeChat：gxyyyy7027</a>
+                    <a href="#" class="contact-item">Tel：139128117</a>
+                    <a href="#" class="contact-item">email：822536832@qq.com</a>
+                </div>
+                
+                
+            </div>
+            <div class="right">
+                <div class="avatar">
+                    <img src="头像.jpg" alt="头像" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

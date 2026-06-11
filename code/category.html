@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>category| Meospill's Blog</title>
+    <head>
+        <link rel="icon" href="菇笑倒.gif">
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, '微软雅黑', sans-serif;
+            background: url("greenroot.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #2c4b32;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 245, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #d4e8d1;
+            padding: 12px 0;
+        }
+
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2b7340;
+            text-decoration: none;
+            background: #eaf8e6;
+            padding: 4px 18px;
+            border-radius: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #3c6e47;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #1b8742;
+            border-bottom: 2px solid #6fbf6f;
+            padding-bottom: 4px;
+        }
+
+        .search-area {
+            background: #f1f9ef;
+            padding: 6px 16px;
+            border-radius: 60px;
+            display: flex;
+            gap: 8px;
+            border: 1px solid #cbe5cb;
+        }
+
+        .search-area input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 140px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn {
+            background: #3a8a4a;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .logout-btn {
+            background: #ccc;
+            color: #333;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .user-name {
+            color: #2b7340;
+            font-weight: 500;
+        }
+
+        .page-header {
+            margin: 40px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: #226a38;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .result-count {
+            color: #628a67;
+            font-size: 0.9rem;
+        }
+
+ 
+        .category-bar {
+            background: rgba(255, 255, 245, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 8px 20px;
+            margin-bottom: 35px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid #d4e8d1;
+        }
+
+        .cat-chip {
+            padding: 8px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+  
+        .cat-chip[data-cat="美食"] {
+            background: #fef3e8;
+            color: #c96b1a;
+        }
+        .cat-chip[data-cat="美食"]:hover,
+        .cat-chip[data-cat="美食"].active {
+            background: #e67e22;
+            color: white;
+        }
+
+        .cat-chip[data-cat="风景"] {
+            background: #e8f4f8;
+            color: #2980b9;
+        }
+        .cat-chip[data-cat="风景"]:hover,
+        .cat-chip[data-cat="风景"].active {
+            background: #2980b9;
+            color: white;
+        }
+
+        .cat-chip[data-cat="知识&科普"] {
+            background: #eef7ea;
+            color: #27ae60;
+        }
+        .cat-chip[data-cat="知识&科普"]:hover,
+        .cat-chip[data-cat="知识&科普"].active {
+            background: #27ae60;
+            color: white;
+        }
+
+        .cat-chip[data-cat="活动"] {
+            background: #f5e6f9;
+            color: #8e44ad;
+        }
+        .cat-chip[data-cat="活动"]:hover,
+        .cat-chip[data-cat="活动"].active {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .cat-chip[data-cat=""] {
+            background: #eef7ea;
+            color: #3c6e47;
+        }
+        .cat-chip[data-cat=""]:hover,
+        .cat-chip[data-cat=""].active {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 30px 0 50px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #dcf0d6;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -10px rgba(70, 120, 60, 0.15);
+        }
+
+        .card-img {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .blog-card[data-cat="美食"] .card-img { background: #fee8d6; }
+        .blog-card[data-cat="风景"] .card-img { background: #d6ecf5; }
+        .blog-card[data-cat="知识&科普"] .card-img { background: #e0f0da; }
+        .blog-card[data-cat="活动"] .card-img { background: #efdfe8; }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: #246e3a;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .card-meta {
+            font-size: 0.75rem;
+            color: #7cae7a;
+            margin: 10px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .tag {
+            background: #eef7ea;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #317744;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 245, 0.8);
+            border-radius: 32px;
+            color: #628a67;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #d1e7cb;
+            color: #628a67;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 700px) {
+            .nav-wrap {
+                flex-direction: column;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="container nav-wrap">
+        <a href="index.html" class="logo">Meospill</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="category.html" class="active">分类</a>
+            <a href="archive.html">归档</a>
+            <a href="AboutMe.html">关于我</a>
+        </div>
+        <div class="search-area">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="搜文章...">
+        </div>
+        <div class="user-info" id="userInfo">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <h1>📂 文章分类</h1>
+        <div class="result-count" id="resultCount"></div>
+    </div>
+
+    <div class="category-bar" id="categoryBar"></div>
+    <div id="articlesContainer" class="card-grid"></div>
+</div>
+<script>
+    const articlesData = [
+
+        { id: 1, title: "毕业季限定｜舌尖珍藏专属校园盛夏回忆", date: "2026-05-28", category: "美食",likes: 156, tags: ["毕业季", "校园美食"], icon: "🍜", externalUrl: "毕业季美食选题.html"},
+        { id: 2, title: "一键解压CCSU美食压缩包", date: "2025-12-13", category: "美食", likes: 589, tags: ["校园美食", "CCSU"], icon: "🍰",externalUrl:"美食压缩包.html"},
+        { id: 3, title: "校园美食MBTI图鉴｜CCSUers的味蕾人格鉴定", date: "2025-11-04", category: "美食", likes: 767, tags: ["MBTI", "校园美食"], icon: "🍲" ,externalUrl:"MBTI.html"},
+       
+        { id: 4, title: "这里，藏着CCSU的“秋日回忆”密码", date: "2025-11-07", category: "风景", likes: 203, tags: ["校园美景", "秋天"], icon: "🏔️", externalUrl: "AutumnMessage.html" },
+        { id: 5, title: "青听植物的声音｜它们在用呼吸雕刻时光", date: "2025-10-26", category: "风景", likes: 112, tags: ["绿植", "校园风景"], icon: "🚲" ,externalUrl:"breathe.html"},
+        { id: 6, title: "把春天拆成四封信，寄给正在赶路的你", date: "2026-04-09", category: "风景", likes: 78, tags: ["春日", "校园风景"], icon: "🏘️" ,externalUrl:"letters.html"},
+    
+        { id: 7, title: "521遇茶日｜一叶茶香温柔撞满怀", date: "2026-05-21", category: "知识&科普",likes: 1018, tags: ["茶文化", "521"], icon: "🍵",  externalUrl: "tea选题.html"  },
+        { id: 8, title: "四级高分作文万能金句汇总", date: "2026-05-14", category: "知识&科普",likes: 1018, tags: ["四级", "学习"], icon: "💪", externalUrl: "四级.html" },
+        { id: 9, title: "以诚赴考，不负韶华｜共建清朗校园考风", date: "2026-06-04", category: "知识&科普",likes: 1999, tags: ["期末周", "考试"], icon: "📚", externalUrl: "诚信考试.html" },
+    
+        { id: 10, title: "“星火之旅”破冰召集令 | 我们的故事，从相遇开始", date: "2025-11-17", category: "活动", likes: 456, tags: ["破冰活动", "青春"], icon: "📚",externalUrl:"ice.html" },
+        { id: 11, title: "青马课堂·养心篇| 青马“励”量，“心”火相传", date: "2025-10-28", category: "活动", likes: 288, tags: ["青马工程", "心理健康"], icon: "♻️" ,externalUrl:"qingma.html"},
+        { id: 12, title: "春“锋”拂校园｜志愿集市赴新程", date: "2026-04-09", category: "活动", likes:142, tags: ["志愿活动", "雷锋精神"], icon: "📷" ,externalUrl:"志愿集市.html"},
+    
+        { id: 13, title: "夏风逐歌，草坪音乐节圆满落幕", date: "2026-5-16", category: "活动", likes: 134, tags: ["草坪音乐节", "夏日好歌声"], icon: "📝",externalUrl:"grass.html" }
+    ];
+
+    const categoryOrder = ["美食", "风景", "知识&科普", "活动"];
+    
+    let currentCategory = '';
+    let searchKeyword = '';
+
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    function renderCard(article) {
+        const hasExternalUrl = article.externalUrl && article.externalUrl.trim() !== "";
+        let clickHandler = "";
+        
+        if (hasExternalUrl) {
+            clickHandler = `onclick="window.open('${article.externalUrl}', '_blank')"`;
+        } else {
+            clickHandler = `onclick="location.href='article.html?id=${article.id}'"`;
+        }
+        
+        const externalBadge = hasExternalUrl ? ' <span style="font-size: 0.7rem; background: #eef7ea; padding: 2px 6px; border-radius: 20px; margin-left: 6px;">🔗 外部</span>' : '';
+        
+        return `<div class="blog-card" data-cat="${article.category}" ${clickHandler}>
+            <div class="card-img"><span style="font-size: 2.5rem;">${article.icon}</span> ${article.category}</div>
+            <div class="card-content">
+                <h3>${article.title}${externalBadge}</h3>
+                <div class="card-meta"><span>📅 ${article.date}</span><span>❤️ ${article.likes} 点赞</span></div>
+                <div>${article.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+            </div>
+        </div>`;
+    }
+
+    function getFilteredArticles() {
+        let filtered = [...articlesData];
+        
+        if (currentCategory && currentCategory !== '') {
+            filtered = filtered.filter(article => article.category === currentCategory);
+        }
+        
+        if (searchKeyword && searchKeyword.trim() !== '') {
+            const kw = searchKeyword.trim().toLowerCase();
+            filtered = filtered.filter(article => 
+                article.title.toLowerCase().includes(kw) ||
+                article.category.toLowerCase().includes(kw) ||
+                article.tags.some(tag => tag.toLowerCase().includes(kw))
+            );
+        }
+        
+        return filtered;
+    }
+
+    function renderCategoryBar() {
+        const barContainer = document.getElementById('categoryBar');
+        if (!barContainer) return;
+        
+        let chipsHtml = `<div class="cat-chip ${currentCategory === '' ? 'active' : ''}" data-cat="">📌 全部</div>`;
+        
+        categoryOrder.forEach(cat => {
+            chipsHtml += `<div class="cat-chip ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${getCategoryIcon(cat)} ${cat}</div>`;
+        });
+        
+        barContainer.innerHTML = chipsHtml;
+        
+        document.querySelectorAll('.cat-chip').forEach(chip => {
+            chip.addEventListener('click', (e) => {
+                const catValue = chip.getAttribute('data-cat');
+                currentCategory = catValue || '';
+                renderCategoryBar();
+                renderArticles();
+                updateResultCount();
+            });
+        });
+    }
+    
+    function getCategoryIcon(cat) {
+        switch(cat) {
+            case '美食': return '🍜';
+            case '风景': return '🏔️';
+            case '知识&科普': return '🔬';
+            case '活动': return '🎉';
+            default: return '📂';
+        }
+    }
+
+    function renderArticles() {
+        const container = document.getElementById('articlesContainer');
+        const filtered = getFilteredArticles();
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                🌱 没有找到相关文章<br>
+                <span style="font-size:0.85rem;">试试其他分类或关键词吧～</span>
+            </div>`;
+            return;
+        }
+        
+        container.innerHTML = filtered.map(article => renderCard(article)).join('');
+    }
+  
+    function updateResultCount() {
+        const countSpan = document.getElementById('resultCount');
+        const filtered = getFilteredArticles();
+        if (countSpan) {
+            if (searchKeyword && currentCategory) {
+                countSpan.innerText = `✨ ${currentCategory} · “${searchKeyword}” 共 ${filtered.length} 篇`;
+            } else if (searchKeyword) {
+                countSpan.innerText = `🔍 搜索“${searchKeyword}” 找到 ${filtered.length} 篇`;
+            } else if (currentCategory) {
+                countSpan.innerText = `📁 ${currentCategory} · 共 ${filtered.length} 篇`;
+            } else {
+                countSpan.innerText = `📚 总计 ${filtered.length} 篇文章`;
+            }
+        }
+    }
+
+    function initSearch() {
+        const searchInputDom = document.getElementById('searchInput');
+        if (!searchInputDom) return;
+        
+        const urlSearch = getQueryParam('search');
+        if (urlSearch && urlSearch.trim() !== '') {
+            searchKeyword = urlSearch.trim();
+            searchInputDom.value = searchKeyword;
+        }
+        
+        searchInputDom.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchKeyword = this.value.trim();
+                currentCategory = '';
+                renderCategoryBar();
+                renderArticles();
+                updateResultCount();
+                const newUrl = `${window.location.pathname}?search=${encodeURIComponent(searchKeyword)}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+        });
+        
+        if (searchKeyword) {
+            renderCategoryBar();
+            renderArticles();
+            updateResultCount();
+        }
+    }
+
+    function updateUserUI() {
+        const userInfoDiv = document.getElementById('userInfo');
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            userInfoDiv.innerHTML = `
+                <span class="user-name">🌿 ${user.username}</span>
+                <button class="logout-btn" id="logoutBtn">退出</button>
+            `;
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.onclick = () => { localStorage.removeItem('currentUser'); updateUserUI(); alert('已退出登录'); };
+        } else {
+            userInfoDiv.innerHTML = `<button class="login-btn" id="loginBtn">登录/注册</button>`;
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) loginBtn.onclick = () => { window.location.href = 'index.html'; };
+        }
+    }
+
+    function init() {
+        initSearch();
+        renderCategoryBar();
+        renderArticles();
+        updateResultCount();
+        updateUserUI();
+    }
+    
+    init();
+</script>
+</body>
+</html>
