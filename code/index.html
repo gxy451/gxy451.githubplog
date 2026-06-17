@@ -3,138 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome To  C1's BLOG</title>
+    <title>Welcome To C1's BLOG</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <head>
-        <link rel="icon" href="呆蜹.png">
-    </head>
+    <link rel="icon" href="呆蜹.png">
     <style>
         * {
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            }
-        body { 
-            font-family: 'Segoe UI', Roboto, '微软雅黑', sans-serif; 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, '微软雅黑', sans-serif;
             background: url("tree&bird.jpg") no-repeat center center fixed;
             background-size: cover;
             color: #2c4b32;
         }
         .container {
-            max-width: 1200px; 
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
-        .navbar { 
-            background: rgba(255,255,245,0.95); 
-            backdrop-filter: blur(10px); 
-            position: sticky; top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid #d4e8d1; 
-            padding: 12px 0; 
+        .navbar {
+            background: rgba(255,255,245,0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #d4e8d1;
+            padding: 12px 0;
         }
-        .nav-wrap { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 20px; 
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .logo { font-size: 1.6rem; 
-            font-weight: 700; 
-            color: #2b7340; 
-            text-decoration: none; 
-            background: #eaf8e6; 
-            padding: 4px 18px; 
-            border-radius: 40px; 
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2b7340;
+            text-decoration: none;
+            background: #eaf8e6;
+            padding: 4px 18px;
+            border-radius: 40px;
         }
-        .nav-links { 
-            display: flex; 
-            gap: 28px; 
-            flex-wrap: wrap; 
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
         }
-        .nav-links a { 
+        .nav-links a {
             text-decoration: none;
             color: #3c6e47;
-            font-weight: 500; 
+            font-weight: 500;
             transition: 0.2s;
-            }
+        }
         .nav-links a:hover, .nav-links a.active {
-            color: #1b8742; 
-            border-bottom: 2px solid #6fbf6f; 
-            padding-bottom: 4px; 
-            }
-        .search-area { 
-            background: #f1f9ef; 
-            padding: 6px 16px; 
-            border-radius: 60px; 
-            display: flex; 
-            gap: 8px; 
-            border: 1px solid #cbe5cb; 
+            color: #1b8742;
+            border-bottom: 2px solid #6fbf6f;
+            padding-bottom: 4px;
         }
-        .search-area input { 
-            border: none; 
-            background: transparent; 
-            outline: none; 
+        .search-area {
+            background: #f1f9ef;
+            padding: 6px 16px;
+            border-radius: 60px;
+            display: flex;
+            gap: 8px;
+            border: 1px solid #cbe5cb;
+        }
+        .search-area input {
+            border: none;
+            background: transparent;
+            outline: none;
             width: 140px;
-         }
-        .user-info { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
         }
-        .login-btn { 
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .login-btn {
             background: #3a8a4a;
-            color: white; 
+            color: white;
             padding: 6px 18px;
             border-radius: 40px;
-            cursor: pointer; 
-            border: none; 
-            }
-        .logout-btn { 
-            background: #ccc; 
-            color: #333; padding: 6px 18px; border-radius: 40px; cursor: pointer; border: none; }
-        .user-name { 
-            color: #2b7340; 
-            font-weight: 500; 
+            cursor: pointer;
+            border: none;
         }
-        .carousel {
+        .logout-btn {
+            background: #ccc;
+            color: #333;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            border: none;
+        }
+        .user-name {
+            color: #2b7340;
+            font-weight: 500;
+        }
+
+        /* 改造后的 welcome 区域，内部包含轮播图 */
+        .welcome-area {
             background: url("greenroot.jpg") no-repeat center center;
             background-size: cover;
-            border-radius: 32px; 
-            margin: 40px 0 30px; 
-            padding: 60px 40px; 
-            text-align: center; 
-            }
-        .carousel img{
-            width:100px
+            border-radius: 32px;
+            margin: 30px 0 20px;
+            padding: 40px 40px 50px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
-        .carousel h2
-         { 
-            font-size: 50px; 
-            color: #1f5430; 
-            margin-bottom: 12px; 
+        .welcome-area h2 {
+            font-size: 50px;
+            color: #1f5430;
+            margin-bottom: 12px;
         }
-        .carousel p { 
-            color: #2c643c; 
-            margin-bottom: 40px; 
+        .welcome-area p {
+            color: #2c643c;
+            margin-bottom: 28px;
+            font-size: 1.1rem;
         }
+        /* 内嵌轮播图容器 */
+        .inline-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 28px;
+            overflow: hidden;
+            background: rgba(245, 255, 240, 0.3);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            border-radius: 24px;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(50, 80, 50, 0.5);
+            color: white;
+            border: none;
+            font-size: 26px;
+            padding: 6px 16px;
+            cursor: pointer;
+            border-radius: 40px;
+            backdrop-filter: blur(6px);
+            z-index: 10;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        .carousel-btn:hover {
+            background: #2b7340;
+        }
+        .carousel-btn.prev {
+            left: 12px;
+        }
+        .carousel-btn.next {
+            right: 12px;
+        }
+        .carousel-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 14px;
+            width: 100%;
+            z-index: 10;
+        }
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 6px;
+            background-color: #c1dbc1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .dot.active {
+            background-color: #2b7340;
+            width: 22px;
+            border-radius: 12px;
+        }
+
         .section-title {
-            font-size: 1.8rem; 
-            text-align: center; 
-            margin: 40px 0 30px; 
-            color: #2b7340; 
-            }
-        .section-title:after { 
-            content: ''; 
-            display: block; 
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 40px 0 30px;
+            color: #2b7340;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
             width: 70px;
-            height: 3px; 
-            background: #a6d89a; 
-            margin: 10px auto 0; 
-            border-radius: 4px; 
-            }
+            height: 3px;
+            background: #a6d89a;
+            margin: 10px auto 0;
+            border-radius: 4px;
+        }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -231,15 +315,9 @@
             min-width: 42px;
             font-size: 1.1rem;
         }
-        .rank-1 { 
-            color: #ff8c42; 
-        }
-        .rank-2 {
-             color: #ffb347; 
-            }
-        .rank-3 { 
-            color: #ffcd94; 
-        }
+        .rank-1 { color: #ff8c42; }
+        .rank-2 { color: #ffb347; }
+        .rank-3 { color: #ffcd94; }
         .hot-title {
             flex: 1;
             margin: 0 14px;
@@ -253,55 +331,55 @@
             color: #e57373;
             font-weight: bold;
         }
-        .card-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
-            margin-bottom: 50px; 
+            margin-bottom: 50px;
         }
-        .blog-card { 
-            background: white; 
-            border-radius: 24px; 
-            overflow: hidden; 
-            border: 1px solid #dcf0d6; 
-            transition: 0.25s; 
-            cursor: pointer; 
+        .blog-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #dcf0d6;
+            transition: 0.25s;
+            cursor: pointer;
         }
-        .blog-card:hover { 
-            transform: translateY(-5px); 
+        .blog-card:hover {
+            transform: translateY(-5px);
             box-shadow: 0 15px 25px -10px rgba(70,120,60,0.15);
-         }
-        .card-img { 
-            height: 160px; 
-            background: #daeed2; 
-            display: flex; 
+        }
+        .card-img {
+            height: 160px;
+            background: #daeed2;
+            display: flex;
             align-items: center;
-             justify-content: center;
-              font-size: 2rem;
+            justify-content: center;
+            font-size: 2rem;
         }
         .card-content {
-            padding: 20px; 
+            padding: 20px;
         }
-        .card-content h3 { 
-            color: #246e3a; 
-            margin-bottom: 8px; 
+        .card-content h3 {
+            color: #246e3a;
+            margin-bottom: 8px;
         }
         .card-meta {
-             font-size: 0.75rem; 
-             color: #7cae7a; 
-             margin: 10px 0; 
-             display: flex; 
-             gap: 15px; 
-            }
-        .tag { 
-            background: #eef7ea; 
-            padding: 4px 12px; 
-            border-radius: 30px; 
-            font-size: 0.7rem; 
-            color: #317744; 
-            display: inline-block; 
+            font-size: 0.75rem;
+            color: #7cae7a;
+            margin: 10px 0;
+            display: flex;
+            gap: 15px;
+        }
+        .tag {
+            background: #eef7ea;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #317744;
+            display: inline-block;
             margin-right: 6px;
-         }
+        }
         .modal {
             display: none;
             position: fixed;
@@ -338,9 +416,7 @@
             cursor: pointer;
             color: #999;
         }
-        .close-modal:hover { 
-            color: #333; 
-        }
+        .close-modal:hover { color: #333; }
         .modal-tabs {
             display: flex;
             gap: 20px;
@@ -385,9 +461,7 @@
             cursor: pointer;
             margin-top: 15px;
         }
-        .modal-form button:hover { 
-            background: #1b5e20; 
-        }
+        .modal-form button:hover { background: #1b5e20; }
         .error-msg {
             color: red;
             font-size: 12px;
@@ -398,13 +472,12 @@
             margin-bottom: 15px;
             color: #2e7d32;
         }
-        @media (max-width: 700px) { 
-            .nav-wrap { 
-                flex-direction: column;
-             } 
-            .charts-row { 
-                grid-template-columns: 1fr; 
-            }
+        @media (max-width: 700px) {
+            .nav-wrap { flex-direction: column; }
+            .charts-row { grid-template-columns: 1fr; }
+            .carousel-slides { height: 180px; }
+            .carousel-btn { font-size: 18px; padding: 4px 12px; }
+            .welcome-area h2 { font-size: 32px; }
         }
     </style>
 </head>
@@ -437,11 +510,33 @@
     </div>
 
     <div class="container">
-        <div class="carousel">      
-            <h2>🐱WELCOME TO C1'S BLOG</h2>
+        <!-- welcome 区域，轮播图内嵌在其中 -->
+        <div class="welcome-area">
+            <h2>🐱 WELCOME TO C1'S BLOG</h2>
             <p>日常好物分享、新媒体运营记录和头脑风暴</p>
-            <img src="菇喝水.gif" alt="the mashroom is fadeaway">
+
+            <!-- 轮播图放在 welcome 内部下方 -->
+            <div class="inline-carousel" v-if="carouselImages.length">
+                <div class="carousel-slides">
+                    <img v-for="(img, idx) in carouselImages" 
+                         :key="idx"
+                         :src="img.url"
+                         :alt="img.alt"
+                         class="carousel-slide"
+                         :class="{ active: currentIndex === idx }">
+                </div>
+                <button class="carousel-btn prev" @click="prevSlide">❮</button>
+                <button class="carousel-btn next" @click="nextSlide">❯</button>
+                <div class="carousel-dots">
+                    <span v-for="(dot, idx) in carouselImages" 
+                          :key="idx"
+                          class="dot"
+                          :class="{ active: currentIndex === idx }"
+                          @click="goToSlide(idx)"></span>
+                </div>
+            </div>
         </div>
+
         <h2 class="section-title">🔥 热门博文推荐</h2>
         <div class="card-grid">
             <div v-for="article in hotArticles" :key="article.id" class="blog-card" @click="goToArticle(article)">
@@ -523,7 +618,7 @@
         localStorage.setItem('users', JSON.stringify([]));
     }
 
-    const { createApp, ref, onMounted, computed, watch, nextTick } = Vue;
+    const { createApp, ref, onMounted, computed, watch, nextTick, onUnmounted } = Vue;
 
     createApp({
         setup() {
@@ -535,6 +630,38 @@
             const registerForm = ref({ username: '', email: '', password: '' });
             const loginErrorMsg = ref('');
             const registerErrorMsg = ref('');
+            const carouselImages = ref([
+                { url: "cat1.jpg", alt: "校园风景1" },
+                { url: "cat2.jpg", alt: "校园活动掠影" },
+                { url: "cat3.jpg", alt: "美食分享" },
+                { url: "cat4.jpg", alt: "知识科普海报" }
+            ]);
+            const currentIndex = ref(0);
+            let timer = null;
+
+            const nextSlide = () => {
+                if(carouselImages.value.length) 
+                    currentIndex.value = (currentIndex.value + 1) % carouselImages.value.length;
+            };
+            const prevSlide = () => {
+                if(carouselImages.value.length)
+                    currentIndex.value = (currentIndex.value - 1 + carouselImages.value.length) % carouselImages.value.length;
+            };
+            const goToSlide = (idx) => {
+                currentIndex.value = idx;
+                resetTimer();
+            };
+            const startAutoPlay = () => {
+                if (timer) clearInterval(timer);
+                timer = setInterval(() => {
+                    nextSlide();
+                }, 4000);
+            };
+            const resetTimer = () => {
+                if (timer) clearInterval(timer);
+                startAutoPlay();
+            };
+
             const articles = ref([
                 { id: 1, title: "以诚赴考，不负韶华|共建清朗校园考风", date: "2026-06-04", category: "知识&科普", likes: 128, tags: ["期末周", "考风"], isHot: true, icon: "✍️", externalUrl: "诚信考试.html" },
                 { id: 2, title: "521遇茶日｜一叶茶香温柔撞满怀", date: "2026-05-28", category: "知识&科普", likes: 94, tags: ["茶文化","传统文化"], isHot: true, icon: "🌿", externalUrl: "tea选题.html" },
@@ -605,8 +732,8 @@
                 registerForm.value = { username: '', email: '', password: '' };
             };
             const logout = () => { localStorage.removeItem('currentUser'); updateUserUI(); alert('已退出登录'); };
-            let categoryChart = null, trendChart = null, likesBarChart = null;
             
+            let categoryChart = null, trendChart = null, likesBarChart = null;
             const getCategoryStats = () => {
                 const map = new Map();
                 articles.value.forEach(a => map.set(a.category, (map.get(a.category) || 0) + 1));
@@ -636,7 +763,6 @@
                 const sorted = [...articles.value].sort((a,b) => b.likes - a.likes).slice(0,6);
                 return { titles: sorted.map(a => a.title.length > 12 ? a.title.slice(0,10)+'...' : a.title), likes: sorted.map(a => a.likes), fullData: sorted };
             };
-            
             const renderCharts = () => {
                 const { categories, counts } = getCategoryStats();
                 const catDom = document.getElementById('categoryChart');
@@ -674,16 +800,22 @@
             };
             
             watch(articles, () => { nextTick(() => renderCharts()); }, { deep: true });
+            
             onMounted(() => {
                 updateUserUI();
                 nextTick(() => renderCharts());
                 window.addEventListener('resize', () => { if (categoryChart) categoryChart.resize(); if (trendChart) trendChart.resize(); if (likesBarChart) likesBarChart.resize(); });
+                startAutoPlay();
             });
-            
+            onUnmounted(() => {
+                if (timer) clearInterval(timer);
+            });
+
             return {
                 currentUser, searchKeyword, isModalOpen, activeModalTab, loginForm, registerForm, loginErrorMsg, registerErrorMsg,
                 totalArticles, totalLikes, categoryCount, avgLikes, hotArticles, topLikedArticles,
-                goToArticle, handleSearch, openModal, closeModal, switchModalTab, handleLogin, handleRegister, logout
+                goToArticle, handleSearch, openModal, closeModal, switchModalTab, handleLogin, handleRegister, logout,
+                carouselImages, currentIndex, nextSlide, prevSlide, goToSlide
             };
         }
     }).mount('#app');
